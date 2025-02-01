@@ -62,6 +62,12 @@ app.listen(port, () => {
 
 3. **Server Setup**:
    - The `port` variable specifies the port number where the server will run.
-   - `app.listen()` starts the server and logs a message to indicate it’s running.
+   - `app.listen()` starts the server and logs a message to indicate it’s running.'
 
-These comments should make it easier for others (or yourself) to understand the code.
+# MIDDLEWARE
+Middleware in Express.js refers to functions that execute during the request-response cycle. These functions have access to the request (req) and response (res) objects, as well as the next function, which passes control to the next middleware in the stack.
+
+
+
+
+
