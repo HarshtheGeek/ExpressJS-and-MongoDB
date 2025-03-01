@@ -101,7 +101,7 @@ Key Features of MongoDB:
 - Horizontal scalability with sharding
 - Rich query language for filtering, sorting, and aggregations
 
-**Mongoose** is an ODM (Object Data Modeling) library for MongoDB in Node.js. It provides a schema-based solution to model application data, making MongoDB easier to work with.
+**Mongoose** is an ODM (Object Data Modeling) library for MongoDB in Node.js. It provides a schema-based solution to model application data, making MongoDB easier to work with. Basically it acts as an intermediary.
 
 Key Features of Mongoose:
 
