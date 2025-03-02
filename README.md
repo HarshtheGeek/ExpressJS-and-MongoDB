@@ -1,7 +1,7 @@
 # Express_JS
 The following repo will contain the notes and the code of Express js, a popular and lightweight web application framework for Node.js
 
-# Examoke of Express JS routes
+# Example of Express JS routes
 
 ```javascript
 // Import the Express.js library
