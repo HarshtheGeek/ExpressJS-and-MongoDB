@@ -189,7 +189,11 @@ A **schema** is a blueprint or structure that defines the organization of data i
 - Mongoose enforces a schema to provide **structure** to MongoDB collections.
 - You define **fields, data types, and constraints** (e.g., required fields, default values).
 
-#### Example (Defining a Schema in Mongoose):
+Here’s your content formatted correctly in GitHub Markdown:  
+
+```markdown
+## Example: Defining a Schema in Mongoose
+
 ```javascript
 const mongoose = require('mongoose');
 
@@ -204,6 +208,108 @@ const userSchema = new mongoose.Schema({
 // Create a model from the schema
 const User = mongoose.model('User', userSchema);
 ```
+
+The above code is used to define a schema in Mongoose.
+
+## Some Common Methods
+
+```javascript
+const newuser = await user.create({
+    Name: 'Shashank Goud', // Name of the user
+    email: 'shashank10@gmail.com', // Email ID of the user
+    Age: 25, // Age of the user
+    isActive: false, // Boolean flag to check if the user is active
+    tag: ['Developer', 'Designer', 'Manager'], // Array of roles/tags assigned to the user
+});
+```
+
+**We created this query. Now, here are some common methods used:**
+
+```javascript
+// Logging the newly created user to the console
+console.log("New user: ", newuser);
+```
+
+```javascript
+// Finding all users where the 'isActive' field is true
+const ActiveuserofTrue = await user.find({ isActive: true });
+console.log("Active users: ", ActiveuserofTrue);
+```
+
+```javascript
+// Finding a specific user by name (returns the first match if multiple exist)
+const FindSpecific = await user.findOne({ Name: 'Shashank Goud' });
+console.log("User found: ", FindSpecific);
+```
+
+```javascript
+// To get the id of the user whose data has been made latest
+const GetlatestUserbyID = await user.findById(newuser._id);
+console.log("ID of the new user", GetlatestUserbyID);
+```
+```javascript
+// To use pagination for specefic items
+const LimitedUser = await user.find().limit(5).skip(1);
+console.log ("Accessed users while skipping 1st", LimitedUser);
+
+```
+# How to Get Specific Fields in MongoDB
+
+In MongoDB, you can retrieve specific fields using **projection**. This can be done in both **Mongoose** and **MongoDB queries**.
+
+---
+
+## Using Mongoose
+
+When querying documents, you can specify which fields to include or exclude.
+
+### **Method 1: Using `.select()`**
+```javascript
+const user = await User.findOne({ name: 'Shashank Goud' }).select('name email');
+console.log(user);
+```
+- This will return only the `name` and `email` fields.
+
+To **exclude a field**, use `-` before the field name:
+```javascript
+const user = await User.findOne({ name: 'Shashank Goud' }).select('-age');
+console.log(user);
+```
+- This will return all fields **except** `age`.
+
+---
+
+### **Method 2: Using `{ projection }` in `.find()`**
+```javascript
+const user = await User.findOne({ name: 'Shashank Goud' }, { name: 1, email: 1, _id: 0 });
+console.log(user);
+```
+- `1` means **include** the field.
+- `0` means **exclude** the field (`_id: 0` removes the `_id` field from the result).
+
+---
+
+## Using Native MongoDB Queries
+
+If you're using the MongoDB shell or native driver:
+
+```javascript
+db.users.find({ name: 'Shashank Goud' }, { name: 1, email: 1, _id: 0 });
+```
+This returns:
+```json
+{ "name": "Shashank Goud", "email": "shashank10@gmail.com" }
+```
+
+---
+
+## Key Points
+- **Include fields:** `{ fieldName: 1 }`
+- **Exclude fields:** `{ fieldName: 0 }`
+- Cannot mix `1` and `0` (except `_id` which is optional).
+- Use `.select()` in **Mongoose** and `{ projection }` in native **MongoDB**.
+
+
 
 
 
