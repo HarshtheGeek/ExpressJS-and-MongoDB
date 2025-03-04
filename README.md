@@ -253,6 +253,11 @@ const LimitedUser = await user.find().limit(5).skip(1);
 console.log ("Accessed users while skipping 1st", LimitedUser);
 
 ```
+```javascript
+//To sort the users from the database
+const SortUsers = await user.find().sort({age : -1}) // -1 sorts the user in ascending order
+console.log ("Sorted user according to age in Ascending order : ", SortUsers);
+```
 # How to Get Specific Fields in MongoDB
 
 In MongoDB, you can retrieve specific fields using **projection**. This can be done in both **Mongoose** and **MongoDB queries**.
