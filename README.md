@@ -314,6 +314,17 @@ This returns:
 - Cannot mix `1` and `0` (except `_id` which is optional).
 - Use `.select()` in **Mongoose** and `{ projection }` in native **MongoDB**.
 
+# NODEMON
+**What is Nodemon?**
+Nodemon is a tool that automatically restarts a Node.js application whenever it detects file changes. This helps developers avoid manually stopping and restarting the server every time they make changes to the code.
+
+**Why Use Nodemon?**
+Speeds up development – No need to restart the server manually after code changes.
+Monitors file changes – Watches for updates in your project files and restarts the app automatically.
+Works with any Node.js application – Can be used with Express, NestJS, or any other Node-based project.
+Lightweight & Easy to Use – No configuration needed in most cases.
+
+
 
 
 
