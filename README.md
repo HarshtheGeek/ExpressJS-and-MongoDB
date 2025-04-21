@@ -51,6 +51,10 @@ app.listen(port, () => {
 });
 ```
 
+# Params 
+`req.params` is an object that holds URL parameters.
+`req.params.id` accesses a specific one — like a user ID from the URL.
+
 ### Explanation of Comments:
 1. **Import and App Initialization**:
    - `const express = require("express")`: Importing Express.js for use in this application.
