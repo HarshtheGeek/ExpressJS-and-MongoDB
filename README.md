@@ -329,6 +329,123 @@ Works with any Node.js application – Can be used with Express, NestJS, or any 
 Lightweight & Easy to Use – No configuration needed in most cases.
 
 
+## 🧠 Common HTTP Methods in Express
+
+| Method        | Description                        | Example Use Case             |
+|---------------|------------------------------------|------------------------------|
+| `app.get()`   | Get/fetch data                     | Show user profile            |
+| `app.post()`  | Create new data                    | Submit a form or register    |
+| `app.put()`   | Update entire data                 | Update full user record      |
+| `app.patch()` | Update part of data                | Change user's email          |
+| `app.delete()`| Remove data                        | Delete a user account        |
+
+---
+
+## 🧪 Sample Routes
+
+```js
+const express = require('express');
+const app = express();
+
+app.use(express.json()); // Middleware to parse JSON
+
+// GET
+app.get('/user/:id', (req, res) => {
+  res.send(`User ID: ${req.params.id}`);
+});
+
+// POST
+app.post('/user', (req, res) => {
+  res.send(`New user: ${req.body.name}`);
+});
+
+// PUT
+app.put('/user/:id', (req, res) => {
+  res.send(`User ${req.params.id} fully updated`);
+});
+
+// PATCH
+app.patch('/user/:id', (req, res) => {
+  res.send(`User ${req.params.id} partially updated`);
+});
+
+// DELETE
+app.delete('/user/:id', (req, res) => {
+  res.send(`User ${req.params.id} deleted`);
+});
+
+app.listen(3000, () => console.log('Server running'));
+```
+
+---
+
+## 🔁 Route Parameters
+
+```js
+// Route: /user/:id
+req.params.id // grabs the 'id' from the URL
+```
+
+Example:
+```
+URL: /user/123
+req.params = { id: '123' }
+```
+
+---
+
+## 🧰 express.json()
+
+```js
+app.use(express.json());
+```
+
+- Parses incoming JSON requests
+- Makes data available in `req.body`
+
+---
+
+## 🛠 Useful Express Methods
+
+| Method               | Purpose                                   |
+|----------------------|-------------------------------------------|
+| `app.use()`          | Apply middleware                         |
+| `app.listen()`       | Start server                             |
+| `app.set()` / `get()`| Set/get config values                    |
+| `res.send()`         | Send plain text or HTML                  |
+| `res.json()`         | Send JSON data                          |
+| `res.status()`       | Set response status code                |
+| `req.params`         | Access route parameters                 |
+| `req.query`          | Access query string (e.g., `?search=hi`)|
+| `req.body`           | Access JSON from client (after `.json()`)|
+
+---
+
+## 🌐 Middleware in Simple Terms
+
+Middleware is a function that runs **between** the request and response.
+
+```js
+app.use((req, res, next) => {
+  console.log('Request received at:', new Date());
+  next(); // pass control to the next middleware/route
+});
+```
+
+---
+
+## 📌 TL;DR
+
+- Express helps you build APIs and web apps faster.
+- Use different HTTP methods for different actions.
+- Use middleware (`express.json()`) to parse JSON.
+- `req.params` for route values like `/user/:id`
+- `req.query` for URLs like `/search?keyword=abc`
+
+---
+
+
+
 
 
 
