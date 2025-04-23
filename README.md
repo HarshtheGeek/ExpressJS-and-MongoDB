@@ -445,6 +445,81 @@ app.use((req, res, next) => {
 ---
 
 
+# BASIC EXPRESS JS CODE 
+```const express = require('express');
+const app = express();
+
+app.use(express.json());
+
+let books = [
+    { title: "Harry Potter", id: 1 },
+    { title: "Game of Thrones", id: 2 }
+];
+
+// Home section
+app.get("/home", (req, res) => {
+    res.json({
+        message: "Welcome to our bookstore API which is using REST API for the tutorial"
+    });
+});
+
+// All books section
+app.get("/books", (req, res) => {
+    res.json(books);
+});
+
+// Single book section
+app.get("/books/:id", (req, res) => {
+    const book = books.find(item => item.id === parseInt(req.params.id));
+    if (book) {
+        res.status(200).json(book);
+    } else {
+        res.status(404).json({
+            message: "Book not found"
+        });
+    }
+});
+
+// Adding new book
+app.post("/add", (req, res) => {
+    const newbook = {
+        title: `book ${books.length+1}`,
+        id: books.length + 1
+    };
+    books.push(newbook);
+    res.status(200).json({
+        message: "The new book has been added successfully",
+        data: newbook
+    });
+});
+
+//Updating a new book
+app.put("/update/:id", (req, res) => {
+    const Updatedbook = books.find(BookItem => BookItem.id === parseInt(req.params.id));
+
+    if (Updatedbook) {
+        // Update title if new one is provided
+        Updatedbook.title = req.body.title || Updatedbook.title;
+
+        res.status(200).json({
+            message: "The book has been updated successfully",
+            data: Updatedbook
+        });
+    } else {
+        res.status(404).json({
+            message: "Book not found"
+        });
+    }
+});
+
+
+let PORT = 4000;
+app.listen(PORT, () => {
+    console.log("Your server is started");
+});
+```
+
+
 
 
 
