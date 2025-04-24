@@ -525,6 +525,43 @@ Dev dependencies are packages that are only needed during the development phase 
 They help developers write, test, and maintain code, but they are not required when the application is actually running.
 
 
+# Some commonly used properties while defining a Schema
+
+```js
+const mongoose = require('mongoose');
+
+const userSchema = new mongoose.Schema({
+  name: {
+    type: String,           // Data type
+    required: true,         // Makes the field mandatory
+    trim: true              // Removes whitespace from both ends
+  },
+  age: {
+    type: Number,
+    min: 0,                 // Minimum value allowed
+    max: 120                // Maximum value allowed
+  },
+  email: {
+    type: String,
+    unique: true,           // Ensures value is unique in the collection
+    lowercase: true         // Converts string to lowercase before saving
+  },
+  isActive: {
+    type: Boolean,
+    default: true           // Default value if none is provided
+  },
+  tags: {
+    type: [String],         // Array of strings
+    default: []
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now       // Automatically sets current timestamp
+  }
+});
+```
+
+
 
 
 
