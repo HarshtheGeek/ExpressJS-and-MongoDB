@@ -519,6 +519,11 @@ app.listen(PORT, () => {
 });
 ```
 
+# Dev Dependencies (Development Dependencies)
+Dev dependencies are packages that are only needed during the development phase of a project—not in production.
+
+They help developers write, test, and maintain code, but they are not required when the application is actually running.
+
 
 
 
