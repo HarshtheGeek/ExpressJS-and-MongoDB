@@ -341,7 +341,7 @@ Lightweight & Easy to Use – No configuration needed in most cases.
 
 ---
 
-## 🧪 Sample Routes
+## Sample Routes
 
 ```js
 const express = require('express');
@@ -379,7 +379,7 @@ app.listen(3000, () => console.log('Server running'));
 
 ---
 
-## 🔁 Route Parameters
+## Route Parameters
 
 ```js
 // Route: /user/:id
@@ -394,7 +394,7 @@ req.params = { id: '123' }
 
 ---
 
-## 🧰 express.json()
+## express.json()
 
 ```js
 app.use(express.json());
@@ -421,7 +421,7 @@ app.use(express.json());
 
 ---
 
-## 🌐 Middleware in Simple Terms
+## Middleware in Simple Terms
 
 Middleware is a function that runs **between** the request and response.
 
@@ -434,7 +434,7 @@ app.use((req, res, next) => {
 
 ---
 
-## 📌 TL;DR
+## TL;DR
 
 - Express helps you build APIs and web apps faster.
 - Use different HTTP methods for different actions.
