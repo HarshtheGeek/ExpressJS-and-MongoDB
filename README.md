@@ -1,55 +1,6 @@
 # Express_JS
-The following repo will contain the notes and the code of Express js, a popular and lightweight web application framework for Node.js
+Express.js is a fast, minimal, and flexible web application framework for Node.js that helps you build web servers and APIs easily.
 
-# Example of Express JS routes
-
-```javascript
-// Import the Express.js library
-const express = require("express");
-
-// Create an instance of an Express application
-const app = express();
-
-/**
- * Define a route for the root URL ("/")
- * This responds with a plain text message when the root URL is accessed.
- */
-app.get("/", (req, res) => {
-    res.send("Hello, if you are seeing this that means appka code sahi se work kar raha hai");
-});
-
-/**
- * Define a route for "/products"
- * This responds with a JSON array of products when the "/products" URL is accessed.
- */
-app.get("/products", (req, res) => {
-    // Array of sample products
-    const Products = [
-        {
-            id: 1,
-            label: 'Product 1',
-        },
-        {
-            id: 2,
-            label: 'Product 2',
-        },
-        {
-            id: 3,
-            label: 'Product 3',
-        }
-    ];
-    // Send the products array as a JSON response
-    res.json(Products);
-});
-
-// Define the port the server will listen on
-const port = 3000;
-
-// Start the server and log a message when it's running
-app.listen(port, () => {
-    console.log(`The server is now running at port ${port}`);
-});
-```
 
 # Params 
 `req.params` is an object that holds URL parameters.
@@ -67,6 +18,69 @@ app.listen(port, () => {
 3. **Server Setup**:
    - The `port` variable specifies the port number where the server will run.
    - `app.listen()` starts the server and logs a message to indicate it’s running.'
+  
+## Sample Routes
+
+```javascript
+const express = require('express');
+const app = express();
+
+app.use(express.json()); // Middleware to parse JSON
+
+// GET
+app.get('/user/:id', (req, res) => {
+  res.send(`User ID: ${req.params.id}`);
+});
+
+// POST
+app.post('/user', (req, res) => {
+  res.send(`New user: ${req.body.name}`);
+});
+
+// PUT
+app.put('/user/:id', (req, res) => {
+  res.send(`User ${req.params.id} fully updated`);
+});
+
+// PATCH
+app.patch('/user/:id', (req, res) => {
+  res.send(`User ${req.params.id} partially updated`);
+});
+
+// DELETE
+app.delete('/user/:id', (req, res) => {
+  res.send(`User ${req.params.id} deleted`);
+});
+
+app.listen(3000, () => console.log('Server running'));
+```
+
+---
+
+## Route Parameters
+
+```js
+// Route: /user/:id
+req.params.id // grabs the 'id' from the URL
+```
+
+Example:
+```
+URL: /user/123
+req.params = { id: '123' }
+```
+
+---
+
+## express.json()
+
+```js
+app.use(express.json());
+```
+
+- Parses incoming JSON requests
+- Makes data available in `req.body`
+
      
 
 # MIDDLEWARE
@@ -92,6 +106,124 @@ Common templating tools include EJS, Handlebars, Pug, and template literals in J
 
 # What is View Engine
 A view engine is a software component that allows the rendering of dynamic content onto a web page, acting as a bridge between the server side and the client side. When a user accesses a webpage, the server responds with dynamic pages, which is possible only because of the view engine. View engines are used in web development to generate dynamic HTML content by filling in placeholders with actual data. They make it easier to manage and update web pages, especially when dealing with dynamic content.
+
+## Common Express Methods
+
+### Routing Methods
+
+| Method        | Description                        | Example                          |
+|---------------|------------------------------------|----------------------------------|
+| `get()`       | Handle GET requests                | `router.get('/', handler)`       |
+| `post()`      | Handle POST requests               | `router.post('/', handler)`      |
+| `put()`       | Handle PUT requests (update)       | `router.put('/:id', handler)`    |
+| `delete()`    | Handle DELETE requests             | `router.delete('/:id', handler)` |
+| `patch()`     | Handle partial updates             | `router.patch('/:id', handler)`  |
+| `all()`       | Handle all HTTP methods            | `router.all('*', handler)`       |
+
+### Middleware Methods
+
+| Method        | Description                                 | Example                          |
+|---------------|---------------------------------------------|----------------------------------|
+| `use()`       | Apply middleware to handle requests         | `app.use(middleware)`            |
+| `next()`      | Pass control to the next middleware         | `next()`                         |
+
+### Response Methods
+
+| Method         | Description                               | Example                               |
+|----------------|-------------------------------------------|---------------------------------------|
+| `res.send()`   | Send a plain text, HTML, or basic object  | `res.send('Hello')`                   |
+| `res.json()`   | Send a JSON-formatted response            | `res.json({ message: 'Hi' })`         |
+| `res.status()` | Set HTTP status code                      | `res.status(404)`                     |
+| `res.redirect()`| Redirect to a different URL              | `res.redirect('/login')`              |
+| `res.render()` | Render a view using a template engine     | `res.render('home')`                  |
+
+### Request Object (`req`) Properties
+
+| Property        | Description                             | Example                              |
+|-----------------|-----------------------------------------|--------------------------------------|
+| `req.params`    | Route parameters (`/user/:id`)          | `req.params.id`                      |
+| `req.query`     | Query string parameters (`?page=2`)     | `req.query.page`                     |
+| `req.body`      | Body data (for POST/PUT requests)       | `req.body.name`                      |
+| `req.headers`   | Request headers                         | `req.headers['authorization']`       |
+
+
+
+# Exapmple code of express js using POSTMAN
+# BASIC EXPRESS JS CODE 
+
+```javascript
+const express = require('express');
+const app = express();
+
+app.use(express.json());
+
+let books = [
+    { title: "Harry Potter", id: 1 },
+    { title: "Game of Thrones", id: 2 }
+];
+
+// Home section
+app.get("/home", (req, res) => {
+    res.json({
+        message: "Welcome to our bookstore API which is using REST API for the tutorial"
+    });
+});
+
+// All books section
+app.get("/books", (req, res) => {
+    res.json(books);
+});
+
+// Single book section
+app.get("/books/:id", (req, res) => {
+    const book = books.find(item => item.id === parseInt(req.params.id));
+    if (book) {
+        res.status(200).json(book);
+    } else {
+        res.status(404).json({
+            message: "Book not found"
+        });
+    }
+});
+
+// Adding new book
+app.post("/add", (req, res) => {
+    const newbook = {
+        title: `book ${books.length+1}`,
+        id: books.length + 1
+    };
+    books.push(newbook);
+    res.status(200).json({
+        message: "The new book has been added successfully",
+        data: newbook
+    });
+});
+
+//Updating a new book
+app.put("/update/:id", (req, res) => {
+    const Updatedbook = books.find(BookItem => BookItem.id === parseInt(req.params.id));
+
+    if (Updatedbook) {
+        // Update title if new one is provided
+        Updatedbook.title = req.body.title || Updatedbook.title;
+
+        res.status(200).json({
+            message: "The book has been updated successfully",
+            data: Updatedbook
+        });
+    } else {
+        res.status(404).json({
+            message: "Book not found"
+        });
+    }
+});
+
+
+let PORT = 4000;
+app.listen(PORT, () => {
+    console.log("Your server is started");
+});
+```
 
 # MongogoDB and Mongoose
 
@@ -329,95 +461,6 @@ Works with any Node.js application – Can be used with Express, NestJS, or any 
 Lightweight & Easy to Use – No configuration needed in most cases.
 
 
-## 🧠 Common HTTP Methods in Express
-
-| Method        | Description                        | Example Use Case             |
-|---------------|------------------------------------|------------------------------|
-| `app.get()`   | Get/fetch data                     | Show user profile            |
-| `app.post()`  | Create new data                    | Submit a form or register    |
-| `app.put()`   | Update entire data                 | Update full user record      |
-| `app.patch()` | Update part of data                | Change user's email          |
-| `app.delete()`| Remove data                        | Delete a user account        |
-
----
-
-## Sample Routes
-
-```js
-const express = require('express');
-const app = express();
-
-app.use(express.json()); // Middleware to parse JSON
-
-// GET
-app.get('/user/:id', (req, res) => {
-  res.send(`User ID: ${req.params.id}`);
-});
-
-// POST
-app.post('/user', (req, res) => {
-  res.send(`New user: ${req.body.name}`);
-});
-
-// PUT
-app.put('/user/:id', (req, res) => {
-  res.send(`User ${req.params.id} fully updated`);
-});
-
-// PATCH
-app.patch('/user/:id', (req, res) => {
-  res.send(`User ${req.params.id} partially updated`);
-});
-
-// DELETE
-app.delete('/user/:id', (req, res) => {
-  res.send(`User ${req.params.id} deleted`);
-});
-
-app.listen(3000, () => console.log('Server running'));
-```
-
----
-
-## Route Parameters
-
-```js
-// Route: /user/:id
-req.params.id // grabs the 'id' from the URL
-```
-
-Example:
-```
-URL: /user/123
-req.params = { id: '123' }
-```
-
----
-
-## express.json()
-
-```js
-app.use(express.json());
-```
-
-- Parses incoming JSON requests
-- Makes data available in `req.body`
-
----
-
-## 🛠 Useful Express Methods
-
-| Method               | Purpose                                   |
-|----------------------|-------------------------------------------|
-| `app.use()`          | Apply middleware                         |
-| `app.listen()`       | Start server                             |
-| `app.set()` / `get()`| Set/get config values                    |
-| `res.send()`         | Send plain text or HTML                  |
-| `res.json()`         | Send JSON data                          |
-| `res.status()`       | Set response status code                |
-| `req.params`         | Access route parameters                 |
-| `req.query`          | Access query string (e.g., `?search=hi`)|
-| `req.body`           | Access JSON from client (after `.json()`)|
 
 ---
 
@@ -434,8 +477,7 @@ app.use((req, res, next) => {
 
 ---
 
-## TL;DR
-
+## Functions of middleware
 - Express helps you build APIs and web apps faster.
 - Use different HTTP methods for different actions.
 - Use middleware (`express.json()`) to parse JSON.
@@ -444,88 +486,13 @@ app.use((req, res, next) => {
 
 ---
 
-
-# BASIC EXPRESS JS CODE 
-```const express = require('express');
-const app = express();
-
-app.use(express.json());
-
-let books = [
-    { title: "Harry Potter", id: 1 },
-    { title: "Game of Thrones", id: 2 }
-];
-
-// Home section
-app.get("/home", (req, res) => {
-    res.json({
-        message: "Welcome to our bookstore API which is using REST API for the tutorial"
-    });
-});
-
-// All books section
-app.get("/books", (req, res) => {
-    res.json(books);
-});
-
-// Single book section
-app.get("/books/:id", (req, res) => {
-    const book = books.find(item => item.id === parseInt(req.params.id));
-    if (book) {
-        res.status(200).json(book);
-    } else {
-        res.status(404).json({
-            message: "Book not found"
-        });
-    }
-});
-
-// Adding new book
-app.post("/add", (req, res) => {
-    const newbook = {
-        title: `book ${books.length+1}`,
-        id: books.length + 1
-    };
-    books.push(newbook);
-    res.status(200).json({
-        message: "The new book has been added successfully",
-        data: newbook
-    });
-});
-
-//Updating a new book
-app.put("/update/:id", (req, res) => {
-    const Updatedbook = books.find(BookItem => BookItem.id === parseInt(req.params.id));
-
-    if (Updatedbook) {
-        // Update title if new one is provided
-        Updatedbook.title = req.body.title || Updatedbook.title;
-
-        res.status(200).json({
-            message: "The book has been updated successfully",
-            data: Updatedbook
-        });
-    } else {
-        res.status(404).json({
-            message: "Book not found"
-        });
-    }
-});
-
-
-let PORT = 4000;
-app.listen(PORT, () => {
-    console.log("Your server is started");
-});
-```
-
 # Dev Dependencies (Development Dependencies)
 Dev dependencies are packages that are only needed during the development phase of a project—not in production.
 
 They help developers write, test, and maintain code, but they are not required when the application is actually running.
 
 
-# Some commonly used properties while defining a Schema
+# Some commonly used properties while defining a Schema using mongoose
 
 ```js
 const mongoose = require('mongoose');
@@ -560,6 +527,9 @@ const userSchema = new mongoose.Schema({
   }
 });
 ```
+
+
+
 
 
 
