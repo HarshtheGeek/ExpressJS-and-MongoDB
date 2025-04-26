@@ -1,5 +1,6 @@
 # Express_JS
-Express.js is a fast, minimal, and flexible web application framework for Node.js that helps you build web servers and APIs easily.
+Express.js is a fast, minimal, and flexible web application framework for Node.js that helps you build web servers and APIs easily. 
+Good shit good shit!!!
 
 
 # Params 
@@ -147,10 +148,12 @@ A view engine is a software component that allows the rendering of dynamic conte
 | `req.headers`   | Request headers                         | `req.headers['authorization']`       |
 
 
+# Parser and Topology
+useNewUrlParser: true | To avoid bugs and correctly parse modern connection URIs.
+useUnifiedTopology: true | To have stable, modern, auto-reconnecting connections.
 
-# Exapmple code of express js using POSTMAN
-# BASIC EXPRESS JS CODE 
 
+# Example code of express js using POSTMAN
 ```javascript
 const express = require('express');
 const app = express();
@@ -318,7 +321,7 @@ A **schema** is a blueprint or structure that defines the organization of data i
 { "name": "Bob", "email": "bob@example.com" }
 ```
 
----
+--- 
 
 ### Mongoose Schema (Schema-Based Approach)
 
