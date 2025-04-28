@@ -530,8 +530,135 @@ const userSchema = new mongoose.Schema({
   }
 });
 ```
+---
 
+# Bcrypt Common Methods (with Examples)
 
+`bcrypt` is a popular Node.js library for securely hashing passwords.
+
+---
+
+## 1. `bcrypt.hash()`
+**Purpose:** Hashes a password.
+
+**Syntax:**
+```javascript
+bcrypt.hash(data, saltRounds)
+```
+- `data`: Plain text password.
+- `saltRounds`: Number of rounds to generate the salt (common: 10–12).
+
+**Example:**
+```javascript
+const bcrypt = require('bcrypt');
+
+async function hashPassword(password) {
+  const saltRounds = 10;
+  const hashedPassword = await bcrypt.hash(password, saltRounds);
+  console.log(hashedPassword);
+}
+
+hashPassword('myPassword123');
+```
+
+---
+
+## 2. `bcrypt.compare()`
+**Purpose:** Compares a plain text password with a hashed password.
+
+**Syntax:**
+```javascript
+bcrypt.compare(data, hashedPassword)
+```
+- Returns `true` if matched, otherwise `false`.
+
+**Example:**
+```javascript
+const bcrypt = require('bcrypt');
+
+async function checkPassword(password, hashedPassword) {
+  const match = await bcrypt.compare(password, hashedPassword);
+  if (match) {
+    console.log("Password matched!");
+  } else {
+    console.log("Password incorrect.");
+  }
+}
+
+// Example usage
+const plainPassword = 'myPassword123';
+const hashedPassword = '$2b$10$H9m5kH8q4Lj1Zi0W8F23zexfzMAtOcGp69/PKmWxXQw6zw6Hc/7bK'; // Example hash
+checkPassword(plainPassword, hashedPassword);
+```
+
+---
+
+## 3. `bcrypt.genSalt()`
+**Purpose:** Generates a salt manually.
+
+**Syntax:**
+```javascript
+bcrypt.genSalt(saltRounds)
+```
+- Generates salt for manual password hashing.
+
+**Example:**
+```javascript
+const bcrypt = require('bcrypt');
+
+async function manualHash(password) {
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(password, salt);
+  console.log(hashedPassword);
+}
+
+manualHash('myPassword123');
+```
+
+---
+
+## ⚡ Bonus: Synchronous Versions
+
+If you prefer not using `async/await`, `bcrypt` provides synchronous methods:
+
+| Async Method         | Sync Version          |
+| -------------------- | ---------------------- |
+| `bcrypt.hash()`       | `bcrypt.hashSync()`     |
+| `bcrypt.compare()`    | `bcrypt.compareSync()`  |
+| `bcrypt.genSalt()`    | `bcrypt.genSaltSync()`  |
+
+**Sync Example:**
+```javascript
+const bcrypt = require('bcrypt');
+
+const salt = bcrypt.genSaltSync(10);
+const hashedPassword = bcrypt.hashSync('myPassword123', salt);
+
+const isMatch = bcrypt.compareSync('myPassword123', hashedPassword);
+console.log(isMatch); // true
+```
+
+---
+
+## 🔥 Quick Overview
+
+| Method              | Purpose                                      |
+| ------------------- | -------------------------------------------- |
+| `hash()`            | Hashes a plain text password                 |
+| `compare()`         | Compares plain text password with a hash     |
+| `genSalt()`         | Creates a salt for hashing                   |
+| `hashSync()`        | Synchronous password hashing                 |
+| `compareSync()`     | Synchronous password comparing               |
+| `genSaltSync()`     | Synchronous salt generation                  |
+
+---
+
+# ✅ Tips
+- Recommended `saltRounds`: 10–12.
+- Always `await` or use `Promise` methods when dealing with bcrypt asynchronously.
+- Never store plain passwords! Always store **only the hashed** version.
+  
+---
 
 
 
