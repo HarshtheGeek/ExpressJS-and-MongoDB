@@ -653,12 +653,93 @@ console.log(isMatch); // true
 
 ---
 
-# ✅ Tips
+# Tips
 - Recommended `saltRounds`: 10–12.
 - Always `await` or use `Promise` methods when dealing with bcrypt asynchronously.
 - Never store plain passwords! Always store **only the hashed** version.
   
 ---
+#  JWT Backend Methods
+
+A reference for commonly used JWT (JSON Web Token) methods in backend applications. This includes token creation, verification, refreshing, and storage strategies.
+
+##  What is JWT?
+
+JWT (JSON Web Token) is an open standard (RFC 7519) for securely transmitting information between parties as a JSON object. It's widely used for authentication and authorization in web applications.
+
+---
+
+## Common JWT Methods
+
+### 1. **Token Creation (Signing)**
+
+Used when a user logs in successfully.
+
+```js
+// Example using Node.js with jsonwebtoken
+const jwt = require('jsonwebtoken');
+
+const payload = { userId: 123 };
+const secret = 'your-secret-key';
+const options = { expiresIn: '1h' };
+
+const token = jwt.sign(payload, secret, options);
+```
+
+### 2. **Token Verification**
+
+Used to protect routes and ensure the request comes from an authenticated user.
+
+```js
+try {
+  const decoded = jwt.verify(token, secret);
+  console.log(decoded); // { userId: 123, iat: ..., exp: ... }
+} catch (err) {
+  // Handle invalid or expired token
+}
+```
+
+### 3. **Token Refresh**
+
+Used to issue a new token when the access token expires, without forcing the user to log in again.
+
+```js
+// Typically involves using a separate refresh token
+const refreshToken = jwt.sign({ userId: 123 }, refreshSecret, { expiresIn: '7d' });
+```
+
+Then when the access token expires:
+
+```js
+// Validate refresh token and issue new access token
+const newAccessToken = jwt.sign({ userId: 123 }, secret, { expiresIn: '1h' });
+```
+
+### 4. **Token Decoding Without Verification**
+
+Useful when you just need to read the payload and don’t care if it’s valid.
+
+```js
+const decoded = jwt.decode(token); // No signature verification
+```
+
+### 5. **Storing Tokens**
+
+- **Access Token**: Typically stored in memory or HTTP-only cookies.
+- **Refresh Token**: Stored securely in HTTP-only cookies or secure storage.
+- **Best Practice**: Never store tokens in localStorage on the frontend due to XSS risks.
+
+---
+
+## Best Practices
+
+- Use short-lived access tokens (`15m - 1h`) and long-lived refresh tokens.
+- Store secrets in environment variables.
+- Use HTTPS to protect tokens in transit.
+- Revoke refresh tokens on logout or suspicious activity.
+
+
+
 
 
 
