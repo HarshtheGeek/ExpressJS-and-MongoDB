@@ -657,6 +657,7 @@ console.log(isMatch); // true
 - Recommended `saltRounds`: 10–12.
 - Always `await` or use `Promise` methods when dealing with bcrypt asynchronously.
 - Never store plain passwords! Always store **only the hashed** version.
+- Once the password is hashed it cant be undone
   
 ---
 #  JWT Backend Methods
@@ -740,19 +741,49 @@ const decoded = jwt.decode(token); // No signature verification
 
 
 
+# Common `res.status()` Codes in Express.js
 
+When building APIs in Node.js with Express, you use `res.status()` to tell the client what happened. Below is a quick cheat sheet for the most commonly used status codes.
 
+---
 
+## Success Responses
 
+| Status Code | Name    | Meaning                                      |
+|-------------|---------|----------------------------------------------|
+| `200`       | OK      | The request was successful                   |
+| `201`       | Created | Something new was successfully created       |
 
+---
 
+## Client Errors
 
+| Status Code | Name            | Meaning                                              |
+|-------------|-----------------|------------------------------------------------------|
+| `400`       | Bad Request     | The request was invalid (e.g. missing or bad data)   |
+| `401`       | Unauthorized    | No token or login provided                          |
+| `403`       | Forbidden       | You are not allowed to access this resource         |
+| `404`       | Not Found       | The requested resource doesn’t exist                |
+| `409`       | Conflict        | A conflict occurred (e.g. user already exists)      |
 
+---
 
+## Server Errors
 
+| Status Code | Name                    | Meaning                                |
+|-------------|-------------------------|----------------------------------------|
+| `500`       | Internal Server Error   | Something went wrong on the server     |
 
+---
 
+## Code Examples
 
-
-
-
+```js
+res.status(200).json({ message: "Success" });
+res.status(201).json({ message: "Created" });
+res.status(400).json({ message: "Bad Request" });
+res.status(401).json({ message: "Unauthorized" });
+res.status(403).json({ message: "Forbidden" });
+res.status(404).json({ message: "Not Found" });
+res.status(409).json({ message: "Conflict" });
+res.status(500).json({ message: "Server Error" });
