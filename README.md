@@ -787,3 +787,21 @@ res.status(403).json({ message: "Forbidden" });
 res.status(404).json({ message: "Not Found" });
 res.status(409).json({ message: "Conflict" });
 res.status(500).json({ message: "Server Error" });
+```
+
+# What Are Handlers in Express.js?
+
+In **Express.js**, a **handler** is a function that gets called when a specific HTTP request hits the server. It handles the incoming request and sends an appropriate response.
+
+---
+
+## 1. Route Handlers
+
+These are functions that handle HTTP routes.
+
+```js
+app.get('/hello', (req, res) => {
+  res.send('Hello, world!');
+});
+```
+- Here (req,res) are handlers
