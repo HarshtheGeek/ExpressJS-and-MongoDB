@@ -805,3 +805,35 @@ app.get('/hello', (req, res) => {
 });
 ```
 - Here (req,res) are handlers
+
+
+# Bearer Header
+A Bearer header is an Authorization header that is used to securely send a token (usually a JWT) from the client to the server to prove the user's identity.
+
+# What is req.headers["authorization"]?
+When a user (client) sends a request to your server (like opening a page, logging in, etc.), it often includes some headers with extra information.
+
+One of these headers is called `Authorization`
+It usually contains login info, like a token or username & password.
+
+**What the code does:**
+- req.headers gives you all the headers sent in the request.
+
+- req.headers["authorization"] gets the Authorization header specifically.
+
+- authheader stores that info.
+
+- console.log(authheader) prints it to the console (so developers can see it while debugging).
+
+
+
+
+
+
+
+
+
+
+
+
+
