@@ -2,7 +2,42 @@
 Express.js is a fast, minimal, and flexible web application framework for Node.js that helps you build web servers and APIs easily. 
 Good shit good shit!!!
 
+# FOLDER STRUCTURE 
+**1. config**
+This is where you keep settings.
+Example: How to connect to the database, secret keys, or which port to run on.
 
+**2. controller**
+This is where the main logic goes.
+
+Example: If someone wants to create a user, the controller decides how to do it.
+
+**3. database**
+This is where you manage the database setup.
+
+Example: Files to connect to your database or create tables.
+
+**4. helpers**
+These are small tools or functions to help you.
+
+Example: A function to format dates or hash passwords.
+
+**5. middleware**
+This is code that runs before the main logic.
+
+Example: Checking if a user is logged in before allowing access.
+
+**6. model**
+This is where you define your data.
+
+Example: What a "User" looks like in the database (name, email, password, etc).
+
+**7. routes**
+This is where you say which URL does what.
+
+Example: If someone visits /login, send them to the login controller.
+
+---
 # Params 
 `req.params` is an object that holds URL parameters.
 `req.params.id` accesses a specific one — like a user ID from the URL.
