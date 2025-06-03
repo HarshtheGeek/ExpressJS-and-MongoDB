@@ -861,6 +861,39 @@ It usually contains login info, like a token or username & password.
 - console.log(authheader) prints it to the console (so developers can see it while debugging).
 
 
+# How does file uploading works using Cloudinary and Multer :
+
+- Client sends the file through a form using multipart/form-data.
+
+- Multer (middleware) catches the file and temporarily stores it (either in memory or on disk).
+
+- You then send that file to Cloudinary using their SDK.
+
+- Cloudinary uploads the file and returns a URL (and other metadata).
+
+- You store that URL (usually in your database) to use later (like showing the image on a page).
+
+
+  # Multer package :
+  
+  Multer is a middleware for Express.js that helps you handle file uploads (like images, PDFs, videos, etc.) from forms (like an HTML form or a Postman request).
+  
+  Think of Multer as the tool that reads a file from a form and makes it usable in your backend code.
+
+  # 🔧 Why Do We Need Multer?
+  By default, Express can’t understand files — it only understands text data like JSON or URL-encoded data.
+
+  If someone uploads a file (e.g., a photo), Express needs help to extract and save it. That’s where Multer comes in.
+
+  # Application of multer :
+
+  - Parses multipart/form-data (the encoding type used for file uploads)
+
+  - Stores the file temporarily (either on disk or in memory)
+
+  - Attaches the file info to req.file so you can access it easily in your route
+
+
 
 
 
