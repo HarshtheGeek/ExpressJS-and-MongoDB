@@ -894,7 +894,117 @@ It usually contains login info, like a token or username & password.
   - Attaches the file info to req.file so you can access it easily in your route
 
 
+Absolutely, Harsh! Let's break down `fs.unlinkSync()` and explain it in a clean, **GitHub-style markdown** with examples.
 
+---
+
+# 📂 `fs.unlinkSync()` in Node.js
+
+The `fs.unlinkSync()` method is a part of Node.js’s built-in `fs` (file system) module.
+
+It is used to **synchronously delete a file** from the file system.
+
+---
+
+## 📌 Syntax
+
+```js
+fs.unlinkSync(path)
+```
+
+* `path` — The file path you want to delete.
+* If the file **does not exist**, it will throw an error (use `try-catch` to handle this).
+
+> ⚠️ **`unlinkSync` is synchronous**, meaning it will **block further code execution** until the file is deleted.
+
+---
+
+## 📦 Importing `fs` Module
+
+```js
+const fs = require('fs');
+```
+
+---
+
+## ✅ Example 1: Basic Usage
+
+```js
+const fs = require('fs');
+
+try {
+  fs.unlinkSync('./uploads/test-image.jpg');
+  console.log('File deleted successfully.');
+} catch (err) {
+  console.error('Error while deleting file:', err.message);
+}
+```
+
+### 🔍 What’s happening:
+
+* This tries to delete the file `test-image.jpg` from the `uploads` folder.
+* If the file exists, it's deleted.
+* If not, the error is caught and logged.
+
+---
+
+## ✅ Example 2: Deleting an uploaded image after saving to Cloudinary
+
+Sometimes, we upload a file to a service (like Cloudinary), then delete it from the local storage:
+
+```js
+const fs = require('fs');
+const cloudinary = require('cloudinary').v2;
+
+const uploadAndDeleteLocal = async (filePath) => {
+  try {
+    const result = await cloudinary.uploader.upload(filePath);
+    console.log('Uploaded to Cloudinary:', result.secure_url);
+
+    // Delete the local file
+    fs.unlinkSync(filePath);
+    console.log('Local file deleted.');
+  } catch (err) {
+    console.error('Error:', err.message);
+  }
+};
+```
+
+---
+
+## ❗ When to Use
+
+* When you need to **ensure** the file is deleted **before** the next line of code runs.
+* Typically in **scripts, CLI tools, or cleanup logic** after uploads or processing.
+
+---
+
+## ❌ Avoid in High-Traffic APIs
+
+Since it **blocks the event loop**, prefer `fs.unlink()` (async version) for production APIs:
+
+```js
+fs.unlink(path, (err) => {
+  if (err) console.error(err);
+  else console.log('Deleted!');
+});
+```
+
+---
+
+## 🧠 Summary
+
+| Feature        | Description                    |
+| -------------- | ------------------------------ |
+| Method         | `fs.unlinkSync(path)`          |
+| Action         | Deletes a file synchronously   |
+| Blocking       | Yes – blocks code execution    |
+| Error handling | Use `try-catch`                |
+| Use case       | Scripts, file cleanup, uploads |
+
+---
+
+Let me know if you'd like the same breakdown for the async version (`unlink`), or want to include this as part of a file upload feature!
 
 
 
