@@ -880,7 +880,7 @@ It usually contains login info, like a token or username & password.
   
   Think of Multer as the tool that reads a file from a form and makes it usable in your backend code.
 
-  # 🔧 Why Do We Need Multer?
+  # Why Do We Need Multer?
   By default, Express can’t understand files — it only understands text data like JSON or URL-encoded data.
 
   If someone uploads a file (e.g., a photo), Express needs help to extract and save it. That’s where Multer comes in.
@@ -893,12 +893,9 @@ It usually contains login info, like a token or username & password.
 
   - Attaches the file info to req.file so you can access it easily in your route
 
-
-Absolutely, Harsh! Let's break down `fs.unlinkSync()` and explain it in a clean, **GitHub-style markdown** with examples.
-
 ---
 
-# 📂 `fs.unlinkSync()` in Node.js
+# `fs.unlinkSync()` in Node.js
 
 The `fs.unlinkSync()` method is a part of Node.js’s built-in `fs` (file system) module.
 
@@ -906,7 +903,7 @@ It is used to **synchronously delete a file** from the file system.
 
 ---
 
-## 📌 Syntax
+## Syntax
 
 ```js
 fs.unlinkSync(path)
@@ -915,11 +912,11 @@ fs.unlinkSync(path)
 * `path` — The file path you want to delete.
 * If the file **does not exist**, it will throw an error (use `try-catch` to handle this).
 
-> ⚠️ **`unlinkSync` is synchronous**, meaning it will **block further code execution** until the file is deleted.
+> **`unlinkSync` is synchronous**, meaning it will **block further code execution** until the file is deleted.
 
 ---
 
-## 📦 Importing `fs` Module
+## Importing `fs` Module
 
 ```js
 const fs = require('fs');
@@ -927,7 +924,7 @@ const fs = require('fs');
 
 ---
 
-## ✅ Example 1: Basic Usage
+## Example 1: Basic Usage
 
 ```js
 const fs = require('fs');
@@ -940,7 +937,7 @@ try {
 }
 ```
 
-### 🔍 What’s happening:
+### What’s happening:
 
 * This tries to delete the file `test-image.jpg` from the `uploads` folder.
 * If the file exists, it's deleted.
@@ -948,7 +945,7 @@ try {
 
 ---
 
-## ✅ Example 2: Deleting an uploaded image after saving to Cloudinary
+## Example 2: Deleting an uploaded image after saving to Cloudinary
 
 Sometimes, we upload a file to a service (like Cloudinary), then delete it from the local storage:
 
@@ -969,17 +966,16 @@ const uploadAndDeleteLocal = async (filePath) => {
   }
 };
 ```
-
 ---
 
-## ❗ When to Use
+## When to Use
 
 * When you need to **ensure** the file is deleted **before** the next line of code runs.
 * Typically in **scripts, CLI tools, or cleanup logic** after uploads or processing.
 
 ---
 
-## ❌ Avoid in High-Traffic APIs
+## Avoid in High-Traffic APIs
 
 Since it **blocks the event loop**, prefer `fs.unlink()` (async version) for production APIs:
 
@@ -989,22 +985,108 @@ fs.unlink(path, (err) => {
   else console.log('Deleted!');
 });
 ```
+---
+# MongoDB Aggregation Pipeline
+
+The **aggregation pipeline** is a framework in **MongoDB** that allows you to process and transform documents in a collection through a sequence of stages.
+
+## Key Concepts
+
+- **Pipeline**: A sequence of stages that process documents.
+- **Stage**: Each step in the pipeline that performs an operation (e.g., filter, group, sort).
+- **Document**: A single record in a MongoDB collection (similar to a row in a SQL database).
+
+## Common Aggregation Stages
+
+| Stage       | Description |
+|-------------|-------------|
+| `$match`    | Filters documents (like SQL `WHERE`). |
+| `$group`    | Groups documents and performs aggregations like `$sum`, `$avg`, etc. |
+| `$project`  | Reshapes documents by including/excluding or computing fields. |
+| `$sort`     | Sorts the documents. |
+| `$limit`    | Limits the number of documents passed to the next stage. |
+| `$skip`     | Skips a specified number of documents. |
+| `$lookup`   | Joins documents from another collection. |
+| `$unwind`   | Deconstructs an array field into multiple documents. |
+
+## Example
+
+```js
+db.sales.aggregate([
+  { $match: { region: "North" } },
+  { $group: { _id: "$product", totalSales: { $sum: "$amount" } } },
+  { $sort: { totalSales: -1 } }
+]);
+````
+
+### Explanation:
+
+1. `$match`: Filters sales documents where `region` is "North".
+2. `$group`: Groups the results by `product` and calculates total sales using `$sum`.
+3. `$sort`: Sorts the grouped documents by `totalSales` in descending order.
+
+## Use Cases
+
+* Generating reports or analytics.
+* Transforming data within the database.
+* Performing complex computations like totals, averages, or joins.
 
 ---
 
-## 🧠 Summary
 
-| Feature        | Description                    |
-| -------------- | ------------------------------ |
-| Method         | `fs.unlinkSync(path)`          |
-| Action         | Deletes a file synchronously   |
-| Blocking       | Yes – blocks code execution    |
-| Error handling | Use `try-catch`                |
-| Use case       | Scripts, file cleanup, uploads |
 
----
 
-Let me know if you'd like the same breakdown for the async version (`unlink`), or want to include this as part of a file upload feature!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
