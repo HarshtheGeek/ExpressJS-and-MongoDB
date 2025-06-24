@@ -1371,8 +1371,233 @@ readStream.on('data', (chunk) => {
 
 ---
 
-Let me know if you want this as a markdown document, PDF, or GitHub-ready README format.
+## 1. **Basic Usage**
 
+```js
+ffmpeg('input.mp4')
+  .output('output.avi')
+  .on('end', () => {
+    console.log('Conversion complete');
+  })
+  .on('error', err => {
+    console.error('Error: ' + err.message);
+  })
+  .run();
+```
+
+**Summary:**
+This converts an MP4 video (`input.mp4`) into AVI format (`output.avi`). It also listens for `end` (success) and `error` (failure) events.
+
+---
+
+## 2. **Convert `.mp4` to `.mp3`**
+
+```js
+ffmpeg('input.mp4')
+  .toFormat('mp3')
+  .save('output.mp3');
+```
+
+**Summary:**
+This extracts the audio from the MP4 video and saves it as an MP3 file (`output.mp3`).
+
+---
+
+## 3. **Extract Audio Only from Video**
+
+```js
+ffmpeg('input.mp4')
+  .noVideo()
+  .audioCodec('libmp3lame')
+  .save('audio.mp3');
+```
+
+**Summary:**
+This removes the video stream and keeps only the audio, which is encoded as MP3 using `libmp3lame`.
+
+---
+
+## 4. **Merge Two Videos**
+
+```js
+ffmpeg()
+  .input('video1.mp4')
+  .input('video2.mp4')
+  .mergeToFile('merged.mp4', './temp')
+  .on('end', () => console.log('Merging done'))
+  .on('error', err => console.error(err));
+```
+
+**Summary:**
+This combines `video1.mp4` and `video2.mp4` into one single video file called `merged.mp4`. The `./temp` folder is used for temporary processing files.
+
+---
+
+## 5. **Generate Thumbnails / Screenshots**
+
+```js
+ffmpeg('video.mp4')
+  .screenshots({
+    timestamps: ['00:00:10', '00:00:20'],
+    filename: 'thumbnail-at-%s-seconds.png',
+    folder: './screenshots',
+    size: '320x240'
+  });
+```
+
+**Summary:**
+This takes screenshots at the 10th and 20th second of the video. Thumbnails will be saved in the `./screenshots` folder with a size of 320x240 pixels.
+
+---
+
+## 6. **Resize Video**
+
+```js
+ffmpeg('input.mp4')
+  .size('640x?')
+  .save('resized.mp4');
+```
+
+**Summary:**
+This resizes the video width to 640 pixels while maintaining the original aspect ratio (`?` lets height adjust automatically).
+
+---
+
+## 7. **Add Watermark (Overlay Image)**
+
+```js
+ffmpeg('input.mp4')
+  .input('watermark.png')
+  .complexFilter([
+    {
+      filter: 'overlay',
+      options: { x: 10, y: 10 }
+    }
+  ])
+  .save('output_with_watermark.mp4');
+```
+
+**Summary:**
+Adds a watermark (`watermark.png`) to the video at position (10px, 10px) from the top-left corner.
+
+---
+
+## 8. **Get Video Metadata**
+
+```js
+ffmpeg.ffprobe('input.mp4', (err, metadata) => {
+  if (err) throw err;
+  console.log(metadata);
+});
+```
+
+**Summary:**
+Fetches metadata such as format, duration, bitrate, and stream info of the video `input.mp4`.
+
+---
+
+## 9. **Capture Webcam Video**
+
+```js
+ffmpeg('video=YourWebcamDeviceName')
+  .inputFormat('dshow') // Windows only
+  .duration(10)
+  .save('capture.mp4');
+```
+
+**Summary:**
+Captures a 10-second video from a webcam device and saves it as `capture.mp4`. `dshow` is the input format for DirectShow (Windows).
+
+---
+
+## 10. **Set Video Bitrate**
+
+```js
+ffmpeg('input.mp4')
+  .videoBitrate('1000k')
+  .save('output.mp4');
+```
+
+**Summary:**
+This compresses the video by setting the video bitrate to 1000 kbps.
+
+---
+
+## 11. **Set Frame Rate**
+
+```js
+ffmpeg('input.mp4')
+  .fps(30)
+  .save('output.mp4');
+```
+
+**Summary:**
+Sets the output video to have a frame rate of 30 frames per second.
+
+---
+
+## 12. **Apply Basic Filter (Grayscale)**
+
+```js
+ffmpeg('input.mp4')
+  .videoFilters('grayscale')
+  .save('gray.mp4');
+```
+
+**Summary:**
+Applies a grayscale filter to remove color and save the video in black and white.
+
+---
+
+## 13. **Apply Text Filter**
+
+```js
+.videoFilters([
+  {
+    filter: 'drawtext',
+    options: {
+      fontfile: '/path/to/font.ttf',
+      text: 'Sample',
+      fontsize: 24,
+      fontcolor: 'white',
+      x: '(w-text_w)/2',
+      y: '(h-text_h)/2'
+    }
+  }
+])
+```
+
+**Summary:**
+Draws the text `"Sample"` in the center of the video using a custom font, size 24, with white color.
+
+---
+
+## 14. **Track Progress, Start, and Error Events**
+
+```js
+.on('start', commandLine => {
+  console.log('Spawned FFmpeg with command: ' + commandLine);
+})
+.on('progress', progress => {
+  console.log('Processing: ' + progress.percent + '% done');
+})
+.on('error', err => {
+  console.log('An error occurred: ' + err.message);
+})
+.on('end', () => {
+  console.log('Processing finished!');
+});
+```
+
+**Summary:**
+This shows detailed lifecycle events:
+
+* When the FFmpeg process starts
+* Progress during processing
+* Errors (if any)
+* When it finishes
+
+---
 
 
 
