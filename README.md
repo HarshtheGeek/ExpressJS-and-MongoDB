@@ -1600,7 +1600,44 @@ This shows detailed lifecycle events:
 ---
 
 
+# Regex (Regular Expressions) - Developer Notes
 
+## What is Regex?
+
+**Regex** (short for **Regular Expression**) is a pattern-matching syntax used to find, extract, and manipulate text based on patterns.
+
+You can think of it as a powerful search engine for strings.
+
+---
+
+## Why Use Regex?
+
+- Validate inputs (emails, phone numbers, passwords)
+- Extract information (timestamps, URLs, keywords)
+- Replace text patterns
+- Useful in almost every programming language
+
+---
+
+## Common Regex Patterns
+
+| Task                        | Pattern                                          |
+|-----------------------------|--------------------------------------------------|
+| **Email**                   | `[\w.-]+@[a-zA-Z\d.-]+\.[a-zA-Z]{2,}`           |
+| **Phone Number (10 digits)**| `\d{10}` or `\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}` |
+| **URL**                     | `https?:\/\/[^\s]+`                             |
+| **Only Digits**             | `^\d+$`                                         |
+| **Only Letters**            | `^[A-Za-z]+$`                                   |
+| **Date (yyyy-mm-dd)**       | `\d{4}-\d{2}-\d{2}`                              |
+| **Timestamp [hh:mm:ss]**    | `\[\d{2}:\d{2}:\d{2}\]`                          |
+
+---
+
+## Regex Breakdown (Email Pattern)
+
+Pattern:  
+```regex
+[\w.-]+@[a-zA-Z\d.-]+\.[a-zA-Z]{2,}
 
 
 
